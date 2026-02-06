@@ -20,4 +20,6 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Long> {
             "LOWER(u.email) LIKE LOWER(concat('%', :q, '%')) OR " +
             "LOWER(u.role) LIKE LOWER(concat('%', :q, '%'))")
     List<Utilisateur> rechercheGlobale(@Param("q") String query);
+
+    boolean existsByEmail(String email);
 }

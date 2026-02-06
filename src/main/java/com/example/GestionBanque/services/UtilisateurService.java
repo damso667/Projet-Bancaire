@@ -1,5 +1,6 @@
 package com.example.GestionBanque.services;
 
+import com.example.GestionBanque.enums.Role;
 import com.example.GestionBanque.models.Utilisateur;
 import com.example.GestionBanque.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,21 @@ public class UtilisateurService {
 
         user.setMotDePasse(passwordEncoder.encode(nouveauMdp));
         utilisateurRepository.save(user);
+    }
+
+    public Utilisateur creerPersonnel(Utilisateur nouveauUser, String role) {
+        //Vérifier si l'email ou le username existe déjà
+        if(utilisateurRepository.existsByEmail(nouveauUser.getEmail())) {
+            throw new RuntimeException("Cet email est déjà utilisé");
+        }
+
+        //crypter le mot de passe
+        nouveauUser.setMotDePasse(passwordEncoder.encode(nouveauUser.getMotDePasse()));
+
+        //  Assigner le rôle (ex: ROLE_CAISSIER)
+        nouveauUser.setRole(Role.valueOf(role));
+        nouveauUser.setActif(true);
+
+        return utilisateurRepository.save(nouveauUser);
     }
 }

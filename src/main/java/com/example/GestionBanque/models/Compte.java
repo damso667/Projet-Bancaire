@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,8 @@ public class Compte {
     @Column(name = "actif", columnDefinition = "VARCHAR(5)")
     @Convert(converter = org.hibernate.type.YesNoConverter.class)
     public  Boolean actif = true;
+
+    private LocalDateTime dateCreation;
 
     private String devise;
 

@@ -37,6 +37,7 @@ public class CompteService {
         compte.setNumeroCompte(numeroGenere);
         compte.setSolde(0.0);
         compte.setDevise("EUR");
+        compte.setDateCreation(LocalDateTime.now());
         compte.setTypeCompte(TypeCompte.COURANT);
         compte.setClient(client);
         return compteRepository.save(compte);
@@ -72,19 +73,19 @@ public class CompteService {
 
     @Transactional
     public void ajouterSolde(String numeroCompte, double montant) {
-        // 1. Validation de sécurité
+        //  Validation de sécurité
         if (montant <= 0) {
             throw new RuntimeException("Le montant du dépôt doit être positif");
         }
 
-        // 2. Recherche du compte
+        //  Recherche du compte
         Compte compte = compteRepository.findByNumeroCompte(numeroCompte)
                 .orElseThrow(() -> new RuntimeException("Compte introuvable"));
 
-        // 3. Mise à jour
+        //  Mise à jour
         compte.setSolde(compte.getSolde() + montant);
 
-        // 4. Sauvegarde
+        //  Sauvegarde
         compteRepository.save(compte);
         enregistrerTransaction(compte, montant, TypeTransaction.DEPOT, "Rechargement compte");
     }
