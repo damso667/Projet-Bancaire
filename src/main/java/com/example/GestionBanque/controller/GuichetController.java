@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/guichet")
 @PreAuthorize("hasRole('CAISSIER')")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "https://projet-banque-front.vercel.app")
 public class GuichetController {
 
     @Autowired
